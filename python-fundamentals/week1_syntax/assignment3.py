@@ -8,10 +8,46 @@ authorized_dealers = [
   },
   {
     "name" : "Nguyễn Công",
+    "city" : "DN",
+    "rating" : "4.5",
+    "product" : ["Ridomil Gold", "Amistar TOP", "Rocsket 888"],
+  },
+  {
+    "name" : "Đại Việt",
+    "city" : "TPHCM",
+    "rating" : "4.8",
+    "product" : ["Anvil 5SC", "Mancozeb", "Amino Humic"]
+  },
+  {
+    "name" : "Long Hân",
     "city" : "HN",
     "rating" : "4.5",
     "product" : ["Ridomil Gold", "Amistar TOP", "Rocsket 888"],
-  }
+  },
+  {
+    "name" : "Phúc Thịnh",
+    "city" : "TPHCM",
+    "rating" : "4.8",
+    "product" : ["Anvil 5SC", "Mancozeb", "Amino Humic"]
+  },
+  {
+    "name" : "An Vinh",
+    "city" : "DL",
+    "rating" : "4.5",
+    "product" : ["Ridomil Gold", "Amistar TOP", "Rocsket 888"],
+  },
+  {
+    "name" : "Ngọc An",
+    "city" : "TPHCM",
+    "rating" : "4.8",
+    "product" : ["Anvil 5SC", "Mancozeb", "Amino Humic"]
+  },
+  {
+    "name" : "An Cường",
+    "city" : "GL",
+    "rating" : "4.5",
+    "product" : ["Ridomil Gold", "Amistar TOP", "Rocsket 888"],
+  },
 ]
 
 # Truy cập và in ra tên đại lý thứ nhất:

@@ -15,3 +15,16 @@
 
 - List comprehension
   Syntax: `[ biểu_thức_muốn_tính for phần_tử in list_gốc if điều_kiện ]`
+  - List comprehension lấy giá trị có điều kiện với list chứa nhiều dictionary
+
+  ```
+  users = [
+    {"name": "An", "age": 25},
+    {"name": "Bình", "age": 30},
+    {"name": "Cường", "age": 22}
+    ]
+
+    # Lấy tên của những người trên 23 tuổi
+    adult_names = [user["name"] for user in users if user["age"] > 23]
+    print(adult_names)  # Kết quả: ['An', 'Bình']
+  ```
