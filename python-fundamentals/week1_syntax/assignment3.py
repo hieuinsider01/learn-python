@@ -27,7 +27,7 @@ authorized_dealers = [
   {
     "name" : "Phúc Thịnh",
     "city" : "TPHCM",
-    "rating" : "4.8",
+    "rating" : "4.4",
     "product" : ["Anvil 5SC", "Mancozeb", "Amino Humic"]
   },
   {
@@ -39,7 +39,7 @@ authorized_dealers = [
   {
     "name" : "Ngọc An",
     "city" : "TPHCM",
-    "rating" : "4.8",
+    "rating" : "4.7",
     "product" : ["Anvil 5SC", "Mancozeb", "Amino Humic"]
   },
   {
