@@ -24,6 +24,7 @@ def main():
             for drug in results:
                 print(drug.get_display_info())
         elif choice == '4':
+            # from manager import save_inventory
             save_inventory(inventory)
             print("Đã lưu kho thuốc. Thoát chương trình.")
             break
