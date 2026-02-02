@@ -16,11 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include # BẮT BUỘC: Import include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     
     # KẾT NỐI API ROOT (Định tuyến tất cả các URL của app 'core' vào /api/)
     # Khi truy cập /api/..., Django sẽ tìm kiếm trong core/urls.py
-    path('api/', include('core.urls'))
+    path('api/', include('core.urls')),
+    # API Đăng nhập/Token
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 ]

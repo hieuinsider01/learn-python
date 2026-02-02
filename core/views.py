@@ -1,10 +1,11 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Disease
-from .serializers import DiseaseSerializer
+from .models import Disease, Dealer
+from .serializers import DiseaseSerializer, DealerSerializer
 from rest_framework import status
 
 @api_view(['GET', 'POST'])
@@ -29,3 +30,8 @@ def disease_list(request):
     diseases = Disease.objects.all() # ORM: Lấy tất cả Object
     serializer = DiseaseSerializer(diseases, many=True) # Tuần tự hóa List Object
     return Response(serializer.data)
+
+#Class này xử lý GET (List) và POST (Create)
+class DealerListCreateView(generics.ListCreateAPIView):
+  queryset = Dealer.objects.all() # ORM: Định nghĩa dữ liệu gốc
+  serializer_class = DealerSerializer
