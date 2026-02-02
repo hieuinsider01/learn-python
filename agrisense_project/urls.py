@@ -15,8 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include # BẮT BUỘC: Import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # KẾT NỐI API ROOT (Định tuyến tất cả các URL của app 'core' vào /api/)
+    # Khi truy cập /api/..., Django sẽ tìm kiếm trong core/urls.py
+    path('api/', include('core.urls'))
 ]
