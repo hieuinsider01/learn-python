@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 # Class này sẽ trở thành BẢNG 'core_disease' trong Database
 class Disease(models.Model):
@@ -24,3 +24,20 @@ class Disease(models.Model):
   # Hàm này định nghĩ cách hiển thị Object khi được in ra
   def __str__(self):
     return self.name
+
+class Dealer(models.Model):
+  name = models.CharField(max_length=100)
+  address = models.TextField()
+  latitude = models.DecimalField(max_digits=9, decimal_places=6)
+  longitude = models.DecimalField(max_digits=9, decimal_places=6)
+
+class Review(models.Model):
+  dealer = models.ForeignKey('Dealer', on_delete=models.CASCADE)
+  rating = models.IntegerField(
+    validators=[
+      MinValueValidator(1),
+      MaxValueValidator(5)     
+    ]
+  )
+  comment = models.TextField()
+  created_at = models.DateTimeField(auto_now_add=True)
