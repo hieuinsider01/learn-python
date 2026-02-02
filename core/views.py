@@ -9,16 +9,23 @@ from rest_framework import status
 
 @api_view(['GET', 'POST'])
 def disease_list(request):
-  # 1. READ (ORM): Lấy tất cả Object từ DB
-  disease = Disease.objects. all()
-  
-  # 2, SERIALIZE (Tuần tự hóa): Biến đổi Object thành Dictionary
-  # many=True vì chúng ta lấy nhiều object
-  serializer = DiseaseSerializer(disease, many=True)
-
-  # Kiểm tra nếu request.method bằng POST
+  # --- 1. LOGIC POST (Tạo mới) ---
   if request.method == 'POST':
-    serializer = DiseaseSerializer(data=request.data) #Truyền JSON data nhận được vào Serializer
-  if serializer.is_valid():
-    serializer.save()
-  return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # Nhận dữ liệu JSON từ requesst và truyền vào Serializer
+    serializer = DiseaseSerializer(data=request.data)
+    
+    # Kiểm tra tính hợp lệ
+    if serializer.is_valid():
+      serializer.save() # Lưu vào Database (Sử dụng ORM)
+      # Trả về kết quả JSON đã tạo và mã 201 (Created)
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # Trả về mã 400 (Bad Request) nếu dữ liệu không hợp lệ
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+  # --- 2. LOGIC GET (Đọc danh sách) --- 
+  # Logic này chỉ chạy khi request.method là GET
+  if request.method == 'GET':
+    diseases = Disease.objects.all() # ORM: Lấy tất cả Object
+    serializer = DiseaseSerializer(diseases, many=True) # Tuần tự hóa List Object
+    return Response(serializer.data)
