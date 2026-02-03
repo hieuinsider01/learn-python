@@ -1,12 +1,13 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import generics
-from rest_framework.decorators import api_view
+from rest_framework import generics, status, viewsets
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from .models import Disease, Dealer
-from .serializers import DiseaseSerializer, DealerSerializer
-from rest_framework import status
+from .models import Disease, Dealer, Review
+from .serializers import DiseaseSerializer, DealerSerializer, ReviewSerializer, ImageUploadSerializer
 
 @api_view(['GET', 'POST'])
 def disease_list(request):
@@ -35,3 +36,30 @@ def disease_list(request):
 class DealerListCreateView(generics.ListCreateAPIView):
   queryset = Dealer.objects.all() # ORM: Định nghĩa dữ liệu gốc
   serializer_class = DealerSerializer
+  
+class ReviewViewSet(viewsets.ModelViewSet):
+  queryset = Review.objects.all()
+  serializer_class = ReviewSerializer
+  
+  # LỆNH BẢO MẬT: Chỉ cho phép POST (Create) nếu user đã đăng nhập.
+  permission_classes = [IsAuthenticatedOrReadOnly]
+  
+@api_view(['GET', 'POST'])
+@parser_classes([MultiPartParser, FormParser])
+def diagnose_image(request):
+  # 1. SERIALIZER: Nhận file ảnh từ request
+  serializer = ImageUploadSerializer(data=request.data)
+  
+  if serializer.is_valid():
+    # 2. XỬ LÝ ẢNH (Logic cốt lõi)
+    uploaded_image = serializer.validated_data['image']
+    
+    #TẠM THỜI: Chỉ trả về tên file và kích thước
+    response_data = {
+      "filename": uploaded_image.name,
+      "size_bytes": uploaded_image.size,
+      "status": "Image received and validated"
+    }
+    return Response(response_data, status=status.HTTP_200_OK)
+  
+  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
